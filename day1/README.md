@@ -1,6 +1,7 @@
 --- Day 1: Report Repair ---
 
 --- Part One ---
+
 ...find the two entries that sum to 2020 and then multiply those two numbers together.
 
 For example, suppose your expense report contained the following:
@@ -22,6 +23,7 @@ advent-of-code-2020> npm run ts-node "./day1/day1_1.ts"
 ```
 
 --- Part Two ---
+
 ...find three numbers in your expense report that meet the same criteria.
 
 Using the above example again, the three entries that sum to 2020 are 979, 366, and 675. Multiplying them together produces the answer, 241861950.
