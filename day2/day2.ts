@@ -1,8 +1,6 @@
-const fs = require("fs");
-const path = "./day2/day2_input.txt";
+import { readLines } from "../util/files";
 
-const text = fs.readFileSync(path, "utf-8");
-const inputLines = text.split("\n");
+const path = "./day2/day2_input.txt";
 
 interface Password {
   lowerLimit: number;
@@ -49,5 +47,10 @@ const checkPasswords = (
   return valid;
 };
 
-console.log(`Part 1 has ${checkPasswords(inputLines, part1_isValid)} valid passwords`);
-console.log(`Part 2 has ${checkPasswords(inputLines, part2_isValid)} valid passwords`);
+const inputLines = readLines(path);
+console.log(
+  `Part 1 has ${checkPasswords(inputLines, part1_isValid)} valid passwords`
+);
+console.log(
+  `Part 2 has ${checkPasswords(inputLines, part2_isValid)} valid passwords`
+);
