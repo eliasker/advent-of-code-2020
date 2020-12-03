@@ -1,4 +1,5 @@
 import { readLines } from "../util/files";
+import { sumArray, multiplyArray } from "../util/math";
 
 const lines = readLines("./day3/day3_input.txt");
 
@@ -10,8 +11,7 @@ const lines = readLines("./day3/day3_input.txt");
 
 // y_max === lines.length, x_max === line.length
 // map is a repeating pattern
-//    --> x wraps around ?
-//    --> new_x = (3 + x) % lines[0].length - 1;
+//    --> x wraps around
 // do until y === y_max
 
 const isTree = (char: string): boolean => {
@@ -29,7 +29,7 @@ const traverse = (map: string[], move_x: number, move_y: number): number => {
     let current_position = map[y].charAt(x);
 
     if (isTree(current_position)) treeCount++;
-    console.log(`${map[y]} (${x},${y}): ${map[y].charAt(x)}`);
+    //console.log(`${map[y]} (${x},${y}): ${map[y].charAt(x)}`);
 
     x += move_x;
     if (x > x_max) {
@@ -39,4 +39,19 @@ const traverse = (map: string[], move_x: number, move_y: number): number => {
   return treeCount;
 };
 
-console.log("found ", traverse(lines, 3, 1), " trees");
+// Part 1
+console.log(`Part 1: Found ${traverse(lines, 3, 1)} trees`);
+
+// Part 2
+const movements = [
+  { move_x: 1, move_y: 1 },
+  { move_x: 3, move_y: 1 },
+  { move_x: 5, move_y: 1 },
+  { move_x: 7, move_y: 1 },
+  { move_x: 1, move_y: 2 },
+];
+
+const trees = movements.map(({ move_x, move_y }) =>
+  traverse(lines, move_x, move_y)
+);
+console.log(`Part 2: Found ${sumArray(trees)}, multiplied values to ${multiplyArray(trees)}`);
