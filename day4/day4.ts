@@ -13,16 +13,20 @@ interface Passport {
   cid?: string; // country id - ignored, missing or not
 }
 
-const passportHasProperties = (passport: Object): boolean => {
-  return (
-    passport.hasOwnProperty("byr") &&
-    passport.hasOwnProperty("iyr") &&
-    passport.hasOwnProperty("eyr") &&
-    passport.hasOwnProperty("hgt") &&
-    passport.hasOwnProperty("hcl") &&
-    passport.hasOwnProperty("ecl") &&
-    passport.hasOwnProperty("pid")
+const isPassport = (obj: any): obj is Passport => {
+  const schema: Passport = {
+    byr: "",
+    iyr: "",
+    eyr: "",
+    hgt: "",
+    hcl: "",
+    ecl: "",
+    pid: "",
+  };
+  const missingKeys = Object.getOwnPropertyNames(schema).filter(
+    (key) => !Object.getOwnPropertyNames(obj).includes(key)
   );
+  return missingKeys.length === 0;
 };
 
 const validateProperties = (passport: Passport): boolean => {
@@ -68,24 +72,13 @@ const validatePassportID = (id: string): boolean => {
   return id.match(/^[0-9]{9}$/) !== null;
 };
 
-const validPassports = (
-  passports: Object[],
-  validateProperty: boolean
-): number => {
-  let valid = 0;
-
-  for (let i = 0; i < passports.length; i++) {
-    if (passportHasProperties(passports[i])) {
-      if (validateProperty) {
-        if (validateProperties(passports[i] as Passport)) {
-          valid++;
-        }
-      } else {
-        valid++;
-      }
-    }
-  }
-  return valid;
+const numberOfValids = (passports: Object[], validate: boolean): number => {
+  let valid = passports.filter((passport) => isPassport(passport));
+  return validate
+    ? valid.filter((validPassports) =>
+        validateProperties(validPassports as Passport)
+      ).length
+    : valid.length;
 };
 
 const parsePassports = (lines: string[]): Object[] => {
@@ -110,9 +103,9 @@ const parsePassports = (lines: string[]): Object[] => {
 };
 
 console.log(
-  `Part 1 has ${validPassports(parsePassports(input), false)} valid passports`
+  `Part 1 has ${numberOfValids(parsePassports(input), false)} valid passports`
 );
 
 console.log(
-  `Part 2 has ${validPassports(parsePassports(input), true)} valid passports`
+  `Part 2 has ${numberOfValids(parsePassports(input), true)} valid passports`
 );
