@@ -29,7 +29,7 @@ const traverse = (map: string[], move_x: number, move_y: number): number => {
     let current_position = map[y].charAt(x);
 
     if (isTree(current_position)) treeCount++;
-    //console.log(`${map[y]} (${x},${y}): ${map[y].charAt(x)}`);
+    //console.log(`${map[y]} (${x},${y}): ${current_position}`);
 
     x += move_x;
     if (x > x_max) {
