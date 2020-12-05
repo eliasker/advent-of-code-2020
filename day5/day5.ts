@@ -15,7 +15,7 @@ interface Seat {
   seatID: number;
 }
 
-const locate = (max: number, str: string): number => {
+const findPosition = (max: number, str: string): number => {
   let boundary_low = 0;
   let boundary_high = max;
   let middle = boundary_high / 2;
@@ -37,24 +37,29 @@ const calculateSeatID = (row: number, column: number): number => {
   return row * 8 + column;
 };
 
-const locateSeat = (seatString: string): Seat => {
+const parseSeat = (seatString: string): Seat => {
   const rowString = seatString.slice(0, 7);
   const columnString = seatString.slice(7);
-  const row = locate(127, rowString);
-  const column = locate(7, columnString);
+  const row = findPosition(127, rowString);
+  const column = findPosition(7, columnString);
   return { row: row, column: column, seatID: calculateSeatID(row, column) };
 };
 
 const findLargestSeatId = (seatLines: string[]): number => {
-  const seatIDs = seatLines.map((seatString) =>
-    locateSeat(seatString).seatID
-  );
+  const seatIDs = seatLines.map((line) => parseSeat(line).seatID);
   return findLargest(seatIDs);
 };
 
-//const example = "FBFBBFFRLR"; // should output row 44, column 5, seatID 357
-//console.log(locateSeat(example))
+const findEmptySeat = (seatLines: string[]): number => {
+  const seats = seatLines.map((line) => parseSeat(line));
+  const sortedSeats = seats.sort((a, b) => a.seatID - b.seatID);
+  return (
+    sortedSeats.find(
+      (seat, index) => seat.seatID - sortedSeats[index + 1].seatID !== -1
+    ).seatID + 1
+  );
+};
 
 const input = readLines("./day5/day5_input.txt");
 console.log(`Part 1 largest seatID: ${findLargestSeatId(input)}`); // Part 1: 896
-
+console.log(`Part 2 empty seatID is: ${findEmptySeat(input)}`); // Part 2: 659
