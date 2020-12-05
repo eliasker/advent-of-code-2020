@@ -102,10 +102,6 @@ const parsePassports = (lines: string[]): Object[] => {
   return passports;
 };
 
-console.log(
-  `Part 1 has ${numberOfValids(parsePassports(input), false)} valid passports`
-);
-
-console.log(
-  `Part 2 has ${numberOfValids(parsePassports(input), true)} valid passports`
-);
+const parsed = parsePassports(input);
+console.log(`Part 1 has ${numberOfValids(parsed, false)} valid passports`);
+console.log(`Part 2 has ${numberOfValids(parsed, true)} valid passports`);
