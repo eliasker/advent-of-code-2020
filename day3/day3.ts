@@ -39,10 +39,10 @@ const traverse = (map: string[], move_x: number, move_y: number): number => {
   return treeCount;
 };
 
-// Part 1
+console.log('--- Day 3 ---')
+
 console.log(`Part 1: Found ${traverse(lines, 3, 1)} trees`);
 
-// Part 2
 const movements = [
   { move_x: 1, move_y: 1 },
   { move_x: 3, move_y: 1 },

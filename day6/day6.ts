@@ -44,5 +44,6 @@ const sumAnswers = (lines: string[], operate: (string: []) => string[]): number 
   return sum;
 };
 
+console.log('--- Day 6 ---')
 console.log(`Part 1: ${sumAnswers(input, countDifferent)}`); //Part 1: 6596
 console.log(`Part 2: ${sumAnswers(input, countCommon)}`); //Part 2: 3219

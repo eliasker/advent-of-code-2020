@@ -61,5 +61,6 @@ const findEmptySeat = (seatLines: string[]): number => {
 };
 
 const input = readLines("./day5/day5_input.txt");
+console.log('--- Day 5 ---')
 console.log(`Part 1 largest seatID: ${findLargestSeatId(input)}`); // Part 1: 896
 console.log(`Part 2 empty seatID is: ${findEmptySeat(input)}`); // Part 2: 659

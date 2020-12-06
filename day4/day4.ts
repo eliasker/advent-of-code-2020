@@ -103,5 +103,6 @@ const parsePassports = (lines: string[]): Object[] => {
 };
 
 const parsed = parsePassports(input);
+console.log('--- Day 4 ---')
 console.log(`Part 1 has ${numberOfValids(parsed, false)} valid passports`);
 console.log(`Part 2 has ${numberOfValids(parsed, true)} valid passports`);

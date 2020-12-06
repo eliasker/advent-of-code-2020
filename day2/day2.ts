@@ -48,6 +48,7 @@ const checkPasswords = (
 };
 
 const inputLines = readLines(path);
+console.log('--- Day 2 ---')
 console.log(
   `Part 1 has ${checkPasswords(inputLines, part1_isValid)} valid passwords`
 );

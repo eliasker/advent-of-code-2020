@@ -1,6 +1,8 @@
 {
   "scripts": {
-    "ts-node": "ts-node"
+    "ts-node": "ts-node",
+    "solve": "ts-node \"./day%npm_config_day%/day%npm_config_day%.ts\""
+
   },
   "dependencies": {
     "@types/node": "^14.14.10"
