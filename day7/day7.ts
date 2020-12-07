@@ -3,8 +3,8 @@ import { readLines } from "../util/files";
 const input = readLines("./day7/day7_input.txt");
 
 const initialize = (lines: string[]) => {
-  let outer = []; // bags that can contain "shiny gold"
-  let inspect = []; // bags that can maybe contain outerBags
+  let outer = []; // bags that can contain "shiny gold" bags
+  let inspect = []; // bags that can maybe contain bags that can contain "shiny gold" bags (and so on... :D)
   let block = []; // dead ends, bags that can't contain other colors
 
   lines.forEach((line) => {
@@ -50,13 +50,35 @@ const findPossible = (outer: string[], inspect: string[], block: string[]) => {
   return newOuter.length;
 };
 
-const findRequired = (outer: string[], inspect:  string[], block: string[])=> {
-  return 0
-}
+// Part 2: should've probably mapped values from the very beginning... :D
+const mapBags = (lines: string[]): Map<string, string[]> => {
+  const bagMap = new Map();
+
+  for (const line of lines) {
+    const [bagColor, rules] = line.split(" bags contain ");
+    bagMap.set(bagColor, rules.split(", "));
+  }
+  return bagMap;
+};
+
+const countBags = (bagColor: string, map: Map<string, string[]>): number => {
+  let result = 0;
+  map.get(bagColor).forEach((rule) => {
+    if (rule.includes("no other")) {
+      return 1;
+    } else {
+      const words = rule.split(" ");
+      const newColor = [words[1], words[2]].join(" ");
+      result += +words[0] + +words[0] * countBags(newColor, map);
+    }
+  });
+  return result;
+};
 
 const initial = initialize(input);
 
 console.log("Day 7");
+
 console.log(
   `Part 1: ${findPossible(
     initial[0],
@@ -65,4 +87,9 @@ console.log(
   )} bags can eventually contain shiny gold bag.`
 );
 
-console.log(`Part 2: ${findRequired(initial[0], initial[1], initial[2])} bags are required inside shiny gold bag.`)
+console.log(
+  `Part 2: total of ${countBags(
+    "shiny gold",
+    mapBags(input)
+  )} bags are required inside shiny gold bag.`
+);

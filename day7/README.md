@@ -61,3 +61,9 @@ dark violet bags contain no other bags.
 In this example, a single shiny gold bag must contain 126 other bags.
 
 How many individual bags are required inside your single shiny gold bag?
+
+Run solution:
+```
+advent-of-code-2020> npm run ts-node "./day7/day7.ts"
+advent-of-code-2020> npm run solve --day=7
+```
