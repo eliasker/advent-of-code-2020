@@ -18,4 +18,7 @@ Windows:
 ```
 For example Day 5 solutions
 advent-of-code-2020> npm run solve:windows --day=5
+or
+advent-of-code-2020> npm run solve --day=5
+
 ```
