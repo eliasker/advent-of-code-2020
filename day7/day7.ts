@@ -77,7 +77,7 @@ const countBags = (bagColor: string, map: Map<string, string[]>): number => {
 
 const initial = initialize(input);
 
-console.log("Day 7");
+console.log("--- Day 7 ---");
 
 console.log(
   `Part 1: ${findPossible(
