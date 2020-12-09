@@ -13,7 +13,15 @@ export const multiplyArray = (numbers: number[]): number => {
 export const findLargest = (numbers: number[]): number => {
   let largest = numbers[0];
   for (const number of numbers) {
-    if (number > largest) largest = number
+    if (number > largest) largest = number;
   }
   return largest;
+};
+
+export const findSmallest = (numbers: number[]): number => {
+  let smallest = numbers[0];
+  for (const number of numbers) {
+    if (number < smallest) smallest = number;
+  }
+  return smallest;
 };
