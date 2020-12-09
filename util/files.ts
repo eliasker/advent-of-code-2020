@@ -6,3 +6,8 @@ export const readLines = (path: string): string[] => {
   const lines = text.split(/\r?\n/);
   return lines;
 };
+
+export const readNumbers = (path: string): number[] => {
+  const lines = readLines(path);
+  return lines.map(line => +line);
+}
