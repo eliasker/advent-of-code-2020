@@ -30,8 +30,34 @@ const checkAdjacent = (map: string[], x: number, y: number): number => {
   });
   return adj;
 };
+// part 2, not yet working, what a mess...  (-_-)
+const checkAdjacent2 = (map: string[], x: number, y: number): number => {
+  let adj = 0;
+  let i = 1;
+  offset.forEach((offxy) => {
+    while (true) {
+      let newx = x + offxy.x * i;
+      let newy = y + offxy.y * i;
+      if (newx >= map[0].length || newx < 0 || newy >= map.length || newy < 0) {
+        break;
+      } else if (map[newy].charAt(newx) === "#") {
+        adj++;
+        break;
+      } else if (map[newy].charAt(newx) === "L") {
+        break;
+      }
+      i++;
+    }
+  });
 
-const loopSeats = (currentMap: string[]) => {
+  return adj;
+};
+
+const loopSeats = (
+  currentMap: string[],
+  maxOccupied: number,
+  onlyNext: boolean
+) => {
   let newMap = [];
   currentMap.forEach((line, y) => {
     let newRow = "";
@@ -39,13 +65,31 @@ const loopSeats = (currentMap: string[]) => {
       if (char === ".") {
         newRow += ".";
       } else if (char === "L") {
-        checkAdjacent(currentMap, x, y) === 0
-          ? (newRow += "#")
-          : (newRow += "L");
+        if (onlyNext) {
+          checkAdjacent(currentMap, x, y) === 0
+            ? (newRow += "#")
+            : (newRow += "L");
+        } else {
+          if (checkAdjacent2(currentMap, x, y) === 0) {
+            newRow += "#";
+          } else {
+            newRow += "L";
+          }
+        }
       } else if (char === "#") {
-        checkAdjacent(currentMap, x, y) >= 4
-          ? (newRow += "L")
-          : (newRow += "#");
+        if (onlyNext) {
+          if (checkAdjacent(currentMap, x, y) >= maxOccupied) {
+            newRow += "L";
+          } else {
+            newRow += "#";
+          }
+        } else {
+          if (checkAdjacent2(currentMap, x, y) >= maxOccupied) {
+            newRow += "L";
+          } else {
+            newRow += "#";
+          }
+        }
       }
     });
     newMap.push(newRow);
@@ -58,19 +102,25 @@ const calculateOccupied = (map: string[]) => {
   map.forEach((line) =>
     line.split("").forEach((char) => (char === "#" ? occupied++ : occupied))
   );
+
   return occupied;
 };
-
-const findBalance = (initial: string[]) => {
+const findBalance = (
+  initial: string[],
+  maxOccupied: number,
+  onlyNext: boolean
+) => {
   let prev = initial;
   while (true) {
-    let newMap = loopSeats(prev);
+    let newMap = loopSeats(prev, maxOccupied, onlyNext);
     if (JSON.stringify(prev) === JSON.stringify(newMap)) break;
     prev = newMap;
   }
+  console.log(prev);
+
   return calculateOccupied(prev);
 };
 
 console.log("--- Day 11 ---");
-console.log(`Part 1: ${findBalance(input)} seats end up occupied.`);
-console.log(`Part 2:`);
+console.log(`Part 1: ${findBalance(input, 4, true)} seats end up occupied.`);
+console.log(`Part 2: ${findBalance(test, 5, false)} seats end up occupied.`);
